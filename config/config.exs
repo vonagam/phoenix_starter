@@ -20,7 +20,7 @@ config( :phx, PhxWeb.Endpoint,
 
   secret_key_base: "eeSJJTu1RTAIqY0ZqpPiVaKF5Szc5E158IU/b7BzvWdHed7rOciJrJVCVES0Mzw5",
 
-  render_errors: [ view: PhxWeb.ErrorView, layout: { PhxWeb.LayoutView, "app.html" }, accepts: ~w( html json ) ],
+  render_errors: [ view: PhxWeb.ErrorView, layout: { PhxWeb.LayoutView, "error.html" }, accepts: ~w( html json ) ],
 
   pubsub: [ name: Phx.PubSub, adapter: Phoenix.PubSub.PG2 ],
 
