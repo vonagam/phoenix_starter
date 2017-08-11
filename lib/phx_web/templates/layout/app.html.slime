@@ -16,9 +16,9 @@ html lang="en"
 
     title Hello Phx!
 
-    script src="http://localhost:8888/application.js"
+    = assets_tags( "application" )
 
-    / link rel="stylesheet" href="#{ static_path( @conn, "/css/app.css" ) }"
+    = favicon_tags()
 
   body
 
@@ -36,12 +36,6 @@ html lang="en"
 
         span.logo
 
-      p.alert.alert-info role="alert"= get_flash( @conn, :info )
-
-      p.alert.alert-danger role="alert"= get_flash( @conn, :error )
-
       main role="main"
 
         = render( @view_module, @view_template, assigns )
-
-    / script src="#{ static_path( @conn, "/js/app.js" ) }"

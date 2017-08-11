@@ -1,19 +1,19 @@
-require IEx
-
-
 defmodule PhxWeb.LayoutView do
 
   use PhxWeb, :view
 
 
-  def render( "app.json", %{ conn: conn, view_module: view_module, view_template: view_template } = assigns ) do
+  def render( "app.json", %{ view_module: view_module, view_template: view_template } = assigns ) do
 
-    do_render_json( conn, render( view_module, view_template, assigns ) )
+    add_json_layout( assigns, render( view_module, view_template, assigns ) )
 
   end
 
 
-  defp do_render_json( conn = %Plug.Conn{}, view ) do
+  defp add_json_layout( %{ conn: conn } = assigns, view ) do
+
+    error = assigns[ :kind ] == :error
+
 
     location = %{
 
@@ -33,20 +33,26 @@ defmodule PhxWeb.LayoutView do
 
     location = Map.put( location, :host, location.hostname <> prepend_delimiter( ":", location.port ) )
 
-    location = Map.put( location, :host, location.protocol <> "//" <> location.host <> location.pathname <> prepend_delimiter( "?", location.search ) )
+    location = Map.put( location, :href, location.protocol <> "//" <> location.host <> location.pathname <> prepend_delimiter( "?", location.search ) )
 
 
     %{
 
+      error: error,
+
       location: location,
 
-      controller: Phoenix.Controller.controller_module( conn ),
+      controller: unless( error, do: controller_module( conn ) |> module_to_string() ),
 
-      action: Phoenix.Controller.action_name( conn ),
+      action: unless( error, do: action_name( conn ) ),
 
-      csrf: Phoenix.Controller.get_csrf_token(),
+      module: view_module( conn ) |> module_to_string(),
 
-      flash: Phoenix.Controller.get_flash( conn ),
+      template: view_template( conn ) |> String.replace_suffix( "." <> get_format( conn ), "" ),
+
+      csrf: get_csrf_token(),
+
+      flash: unless( error, do: get_flash( conn ) ),
 
       # locale
 
@@ -58,8 +64,101 @@ defmodule PhxWeb.LayoutView do
 
   end
 
-  defp prepend_delimiter( _delimiter, "" ), do: ""
+  defp prepend_delimiter( delimiter, value ) do
 
-  defp prepend_delimiter( delimiter, value ), do: delimiter <> value
+    if( value == "", do: "", else: delimiter <> value )
+
+  end
+
+  defp module_to_string( module ) do
+
+    module |> Atom.to_string() |> String.replace_prefix( "Elixir.", "" )
+
+  end
+
+
+  defp assets_tags( bundle ) do
+
+    if Phx.env?( :prod ) do
+
+      fetch_cache "assets:" <> bundle, fn ->
+
+        Application.app_dir( :phx, "priv/static/assets/manifest.json" )
+
+        |> File.read!()
+
+        |> Poison.decode!()
+
+        |> Map.fetch!( bundle )
+
+        |> Enum.map( fn( { type, path } ) ->
+
+          path = cond do
+
+            match = Regex.named_captures( ~r/^[^\.]+\.(?<hash>[^\.]+)\.[^\.]+$/u, path ) -> path <> "?vsn=" <> match[ "hash" ]
+
+            true -> path
+
+          end
+
+          case type do
+
+            "js" -> content_tag( :script, nil, src: path )
+
+            "css" -> tag( :link, rel: "stylesheet", href: path )
+
+          end
+
+        end )
+
+      end
+
+    else
+
+      content_tag( :script, nil, src: "http://localhost:8888/" <> bundle <> ".js" )
+
+    end
+
+  end
+
+  defp favicon_tags do
+
+    fetch_cache "favicons", fn ->
+
+      json = case Phx.env() do
+
+        :prod ->
+
+          File.read!( Application.app_dir( :phx, "priv/static/assets/favicons.json" ) )
+
+        _ ->
+
+          ( %_{ status_code: 200 } = HTTPoison.get!( "http://localhost:8888/favicons.json" ) ).body
+
+        #nd
+
+      end
+
+
+      html = json
+
+      |> Poison.decode!()
+
+      |> Map.fetch!( "html" )
+
+      |> Enum.join( "\n" )
+
+
+      { :safe, html }
+
+    end
+
+  end
+
+  defp fetch_cache( key, fun ) do
+
+    Cachex.get!( :layout_view, key, fallback: fn( _key ) -> fun.() end )
+
+  end
 
 end

@@ -7,8 +7,6 @@ defmodule PhxWeb.Router do
 
     plug( :accepts, ~w( html json ) )
 
-    plug( :put_layout_formats, ~w( html json ) )
-
     plug( :fetch_session )
 
     plug( :fetch_flash )

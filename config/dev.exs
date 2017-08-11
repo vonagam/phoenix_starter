@@ -13,6 +13,12 @@ config( :phoenix,
 
 )
 
+config( :phx,
+
+  env: :dev,
+
+)
+
 config( :phx, Phx.Repo,
 
   adapter: Ecto.Adapters.Postgres,

@@ -13,6 +13,8 @@ defmodule Phx.Application do
 
       supervisor( PhxWeb.Endpoint, [] ),
 
+      worker( Cachex, [ :layout_view ] ),
+
     ]
 
     Supervisor.start_link( children, strategy: :one_for_one, name: Phx.Supervisor )

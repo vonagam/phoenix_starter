@@ -11,6 +11,6 @@ node_modules
 
 .vscode
 
-/priv/static
+/priv/static/assets
 /config/*.secret.exs
 /assets/source/routes.js

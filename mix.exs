@@ -47,6 +47,10 @@ defmodule Phx.Mixfile do
 
         { :cowboy, "~> 1.0" },
 
+        { :cachex, "~> 2.1" },
+
+        { :httpoison, "~> 0.12" },
+
         { :trailing_format_plug, github: "vonagam/trailing_format_plug" },
 
         { :phoenix_slime, "~> 0.8.0" },
@@ -65,7 +69,7 @@ defmodule Phx.Mixfile do
 
       mod: { Phx.Application, [] },
 
-      extra_applications: [ :logger, :runtime_tools ]
+      extra_applications: [ :logger, :runtime_tools ],
 
     ]
 

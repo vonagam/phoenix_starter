@@ -1,5 +1,15 @@
 import 'phoenix_html';
 
-console.log( 'hello33' );
+import _ from 'lodash';
 
-require( './index.styl' );
+
+_.each( [ 1, 2 ], ( item ) => {
+
+  console.log( item );
+
+} );
+
+
+window.React = React;
+
+window.$ = $;

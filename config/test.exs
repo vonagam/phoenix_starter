@@ -7,6 +7,12 @@ config( :logger,
 
 )
 
+config( :phx,
+
+  env: :test,
+
+)
+
 config( :phx, Phx.Repo,
 
   adapter: Ecto.Adapters.Postgres,

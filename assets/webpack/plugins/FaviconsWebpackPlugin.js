@@ -1,7 +1,7 @@
 'use strict';
 
 
-module.exports = function ( { toPath } ) {
+module.exports = function ( { toPath, isProd } ) {
 
   return new ( require( 'favicons-webpack-plugin' ) )( {
 
@@ -9,7 +9,7 @@ module.exports = function ( { toPath } ) {
 
     emitStats: true,
 
-    prefix: 'favicons-[hash]/',
+    prefix: isProd ? 'favicons-[hash]/' : 'favicons/',
 
     statsFilename: 'favicons.json',
 

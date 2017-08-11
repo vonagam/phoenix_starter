@@ -11,9 +11,9 @@ defmodule PhxWeb do
 
     quote do
 
-      import Plug.Conn
-
       use Phoenix.Controller, namespace: PhxWeb
+
+      import Plug.Conn
 
       import PhxWeb.Router.Helpers
 
@@ -31,7 +31,7 @@ defmodule PhxWeb do
 
       use Phoenix.HTML
 
-      import Phoenix.Controller, only: [ get_flash: 2, view_module: 1 ]
+      import Phoenix.Controller, except: [ render: 2, render: 3, render: 4 ]
 
       import PhxWeb.Router.Helpers
 
@@ -45,13 +45,25 @@ defmodule PhxWeb do
 
   end
 
+  def endpoint do
+
+    quote do
+
+      use Phoenix.Endpoint, otp_app: :phx
+
+      import Phoenix.Controller
+
+    end
+
+  end
+
   def router do
 
     quote do
 
-      import Plug.Conn
-
       use Phoenix.Router
+
+      import Plug.Conn
 
       import Phoenix.Controller
 

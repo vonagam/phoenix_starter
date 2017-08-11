@@ -1,11 +1,15 @@
 defmodule PhxWeb.Endpoint do
 
-  use Phoenix.Endpoint, otp_app: :phx
+  use PhxWeb, :endpoint
 
 
   socket( "/socket", PhxWeb.UserSocket )
 
-  plug( Plug.Static, at: "/", from: :phx )
+  if Phx.env?( :prod )  do
+
+    plug( Plug.Static, at: "/", from: :phx, only: ~w( assets robots.txt ), gzip: true )
+
+  end
 
   plug( TrailingFormatPlug )
 
@@ -30,6 +34,8 @@ defmodule PhxWeb.Endpoint do
   plug( Plug.Head )
 
   plug( Plug.Session, store: :cookie, key: "_phx_key", signing_salt: "ChXyaTBh" )
+
+  plug( :put_layout_formats, ~w( html json ) )
 
   plug( PhxWeb.Router )
 

@@ -19,13 +19,13 @@ module.exports = function ( { toPath, get, set, push } ) {
 
     } ),
 
-    new ( require( 'clean-webpack-plugin' ) )( [ toPath( '../priv/static' ) ], { root: toPath( '../priv' ), verbose: false } ),
+    new ( require( 'clean-webpack-plugin' ) )( [ toPath( '../priv/static/assets' ) ], { root: toPath( '../priv/static' ), verbose: false } ),
 
-    new ( require( 'copy-webpack-plugin' ) )( [ { from: toPath( './static' ), to: toPath( '../priv/static' ) } ] ),
+    // new ( require( 'copy-webpack-plugin' ) )( [ { from: toPath( './static' ), to: toPath( '../priv/static' ) } ] ),
 
-    new ( require( 'assets-webpack-plugin' ) )( { path: get( 'output.path' ), filename: 'assets.json' } ),
+    new ( require( 'assets-webpack-plugin' ) )( { path: get( 'output.path' ), filename: 'manifest.json' } ),
 
-    // new ( require( 'compression-webpack-plugin' ) )(),
+    new ( require( 'compression-webpack-plugin' ) )(),
 
   ] );
 

@@ -13,7 +13,7 @@ module.exports = function ( { toPath, get, set, push } ) {
 
     https: false,
 
-    contentBase: toPath( './static' ),
+    contentBase: toPath( '../priv/static' ),
 
     compress: true,
 

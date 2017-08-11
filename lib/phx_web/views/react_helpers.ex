@@ -8,11 +8,9 @@ defmodule PhxWeb.ReactHelpers do
 
       def render( unquote( name <> ".html" ), assigns ) do
 
-        PhxWeb.LayoutView.render( "react.html", Map.merge( assigns, %{
+        json = render( unquote( name <> ".json" ), assigns )
 
-          json: render( unquote( name <> ".json" ), assigns ),
-
-        } ) )
+        PhxWeb.LayoutView.render( "react.html", Map.put( assigns, :json, json ) )
 
       end
 
