@@ -1,0 +1,5 @@
+<script>
+
+  console.log( <%= { :safe, Poison.encode!( do_render_json( @conn, @json ) ) } %> )
+
+</script>

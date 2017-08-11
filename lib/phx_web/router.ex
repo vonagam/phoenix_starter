@@ -5,31 +5,27 @@ defmodule PhxWeb.Router do
 
   pipeline :browser do
 
-    plug :accepts, [ "html" ]
+    plug( :accepts, ~w( html json ) )
 
-    plug :fetch_session
+    plug( :put_layout_formats, ~w( html json ) )
 
-    plug :fetch_flash
+    plug( :fetch_session )
 
-    plug :protect_from_forgery
+    plug( :fetch_flash )
 
-    plug :put_secure_browser_headers
+    plug( :protect_from_forgery )
 
-  end
-
-  pipeline :api do
-
-    plug :accepts, [ "json" ]
+    plug( :put_secure_browser_headers )
 
   end
+
 
   scope "/", PhxWeb do
 
-    pipe_through :browser
+    pipe_through( :browser )
 
-    get "/", PageController, :index
 
-    get "/hello", HelloController, :index
+    get( "/", PageController, :index )
 
   end
 

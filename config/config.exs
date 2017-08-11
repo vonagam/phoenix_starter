@@ -1,10 +1,17 @@
-
 use Mix.Config
 
 
 config( :phoenix, :template_engines,
 
   slime: PhoenixSlime.Engine,
+
+)
+
+config( :logger, :console,
+
+  format: "$time $metadata[$level] $message\n",
+
+  metadata: [ :request_id ],
 
 )
 
@@ -26,13 +33,17 @@ config( :phx, PhxWeb.Endpoint,
 
 )
 
-config( :logger, :console,
+config( :phx, :jsroutes,
 
-  format: "$time $metadata[$level] $message\n",
+  router: PhxWeb.Router,
 
-  metadata: [ :request_id ],
+  exclude: ~r{/admin},
+
+  output_folder: "assets/source",
+
+  output_file: "routes.js",
 
 )
 
 
-import_config "#{ Mix.env }.exs"
+import_config( "#{ Mix.env }.exs" )
