@@ -47,6 +47,10 @@ defmodule Phx.Mixfile do
 
         { :cowboy, "~> 1.0" },
 
+        { :canary, github: "cpjk/canary" },
+
+        { :coherence, "~> 0.4" },
+
         { :cachex, "~> 2.1" },
 
         { :httpoison, "~> 0.12" },

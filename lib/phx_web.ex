@@ -63,6 +63,8 @@ defmodule PhxWeb do
 
       use Phoenix.Router
 
+      use Coherence.Router
+
       import Plug.Conn
 
       import Phoenix.Controller

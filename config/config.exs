@@ -45,5 +45,51 @@ config( :phx, :jsroutes,
 
 )
 
+config( :coherence,
+
+  user_schema: Phx.Coherence.User,
+
+  repo: Phx.Repo,
+
+  module: Phx,
+
+  web_module: PhxWeb,
+
+  router: PhxWeb.Router,
+
+  messages_backend: PhxWeb.Coherence.Messages,
+
+  logged_out_url: "/",
+
+  email_from_name: "Your Name",
+
+  email_from_email: "yourname@example.com",
+
+  opts: [
+
+    :registerable,
+
+    :authenticatable,
+
+    :rememberable,
+
+    :trackable,
+
+    :confirmable,
+
+    :recoverable,
+
+    :invitable,
+
+    :lockable,
+
+    :unlockable_with_token,
+
+  ],
+
+  user_token: true,
+
+)
+
 
 import_config( "#{ Mix.env }.exs" )

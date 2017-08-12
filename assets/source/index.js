@@ -13,3 +13,5 @@ _.each( [ 1, 2 ], ( item ) => {
 window.React = React;
 
 window.$ = $;
+
+window.Routes = Routes;

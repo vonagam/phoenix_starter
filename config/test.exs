@@ -36,3 +36,9 @@ config( :phx, PhxWeb.Endpoint,
   server: false,
 
 )
+
+config( :coherence, PhxWeb.Coherence.Mailer,
+
+  adapter: Swoosh.Adapters.Local,
+
+)

@@ -17,13 +17,52 @@ defmodule PhxWeb.Router do
 
   end
 
+  pipeline :public do
+
+    plug( Coherence.Authentication.Session )
+
+  end
+
+  pipeline :protected do
+
+    plug( Coherence.Authentication.Session, protected: true )
+
+  end
+
+
+  scope "/" do
+
+    pipe_through( [ :browser, :public ] )
+
+    coherence_routes( :public )
+
+  end
+
+  scope "/" do
+
+    pipe_through( [ :browser, :protected ] )
+
+    coherence_routes( :protected )
+
+  end
 
   scope "/", PhxWeb do
 
-    pipe_through( :browser )
-
+    pipe_through( [ :browser, :public ] )
 
     get( "/", PageController, :index )
+
+  end
+
+  if Phx.env?( :dev ) do
+
+    scope "/dev" do
+
+      pipe_through( [ :browser ] )
+
+      forward( "/mailbox", Plug.Swoosh.MailboxPreview, [ base_path: "/dev/mailbox" ] )
+
+    end
 
   end
 

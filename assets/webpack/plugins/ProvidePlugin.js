@@ -11,6 +11,8 @@ module.exports = function () {
 
     'ReactDOM': 'react-dom',
 
+    'Routes': '~/routes',
+
   } );
 
 };
