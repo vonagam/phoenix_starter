@@ -91,5 +91,25 @@ config( :coherence,
 
 )
 
+config( :ex_admin,
+
+  repo: Phx.Repo,
+
+  module: PhxWeb,    # MyProject.Web for phoenix >= 1.3.0-rc
+
+  modules: [
+
+    PhxWeb.ExAdmin.Dashboard,
+
+  ],
+
+)
+
+config( :xain,
+
+  after_callback: { Phoenix.HTML, :raw },
+
+)
+
 
 import_config( "#{ Mix.env }.exs" )

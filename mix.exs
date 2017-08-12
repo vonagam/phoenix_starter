@@ -61,6 +61,8 @@ defmodule Phx.Mixfile do
 
         { :phoenix_jsroutes, github: "vonagam/phoenix-jsroutes" },
 
+        { :ex_admin, github: "smpallen99/ex_admin" },
+
       ],
 
     ]

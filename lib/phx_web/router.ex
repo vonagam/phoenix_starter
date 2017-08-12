@@ -66,4 +66,12 @@ defmodule PhxWeb.Router do
 
   end
 
+  scope "/admin", ExAdmin do
+
+    pipe_through( [ :browser ] )
+
+    admin_routes()
+
+  end
+
 end

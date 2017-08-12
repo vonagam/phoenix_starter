@@ -22,7 +22,7 @@ defmodule Phx.Coherence.Invitation do
 
     model
 
-    |> cast( params, [ :name, :email, :token ] ) )
+    |> cast( params, [ :name, :email, :token ] )
 
     |> validate_required( [ :name, :email ] )
 

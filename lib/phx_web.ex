@@ -19,6 +19,8 @@ defmodule PhxWeb do
 
       import PhxWeb.Gettext
 
+      import PhxWeb.Authentication
+
     end
 
   end
@@ -65,9 +67,13 @@ defmodule PhxWeb do
 
       use Coherence.Router
 
+      use ExAdmin.Router
+
       import Plug.Conn
 
       import Phoenix.Controller
+
+      import PhxWeb.Authentication
 
     end
 

@@ -7,7 +7,25 @@ defmodule PhxWeb.Endpoint do
 
   if Phx.env?( :prod )  do
 
-    plug( Plug.Static, at: "/", from: :phx, only: ~w( assets robots.txt ), gzip: true )
+    plug( Plug.Static, at: "/", from: :phx, only: ~w(
+
+      assets
+
+      robots.txt
+
+      css fonts images js
+
+    ), gzip: true )
+
+  else
+
+    plug( Plug.Static, at: "/", from: :phx, only: ~w(
+
+      robots.txt
+
+      css fonts images js
+
+    ) )
 
   end
 
